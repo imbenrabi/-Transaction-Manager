@@ -25,9 +25,14 @@ export class UsersRouter {
         });
         this.express.route('/user').post(async (req, res, next) => {
             try {
+                console.log('1');
                 let user = new User(req.body);
+                console.log('2');
                 user = await user.save()
-                return next(handleMongoResp(user));
+                console.log('3');
+                const token = await user.generateAuthToken()
+                console.log(token);
+                return next({ ...handleMongoResp(user), token });
             } catch (e) {
                 let content = this.services.parsing.parseError(e);
                 return next(content);

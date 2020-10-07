@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -51,6 +51,13 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
+/**virtual is data relationship management, not actual field in the schema */
+userSchema.virtual('transactions', {
+    ref: 'Transaction',
+    localField: '_id',
+    foreignField: 'owner'
+})
+
 /**userSchema.methods house instance methods */
 
 /**toJSON is used by express behind the scenes to send JSON data to the client
@@ -68,7 +75,7 @@ userSchema.methods.toJSON = function () {
 
 userSchema.methods.generateAuthToken = async function () {
     const user = this;
-    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET || 'exampleSecret');
 
     user.tokens = user.tokens.concat({ token });
     await user.save();
@@ -116,4 +123,6 @@ userSchema.pre('remove', async function (next) {
 })
 
 
-export const User = mongoose.model('user', userSchema);
+//export const User = mongoose.model('user', userSchema);
+const User = mongoose.model('user', userSchema);
+module.exports = User;
