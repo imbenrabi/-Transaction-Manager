@@ -7,12 +7,37 @@ import axios from "axios"
 // const axios = require('axios')
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      transactions: [
+        { amount: 3200, vendor: "Elevation", category: "Salary" },
+        { amount: -7, vendor: "Runescape", category: "Entertainment" },
+        { amount: -20, vendor: "Subway", category: "Food" },
+        { amount: -98, vendor: "La Baguetterie", category: "Food" }
+      ]
+
+    }
+  }
+
+  renderBalance = () => {
+    let balance = 0;
+    this.state.transactions.forEach(t => balance += t.amount)
+
+    return `Balance: $${balance}`
+  }
+
+  addTransaction = () => { }
 
   render() {
-
+    const state = this.state;
     return (
-      <div><p>Hello World!</p></div>
-    )
+      <div>
+        <div className="balance">{this.renderBalance()}</div>
+        <Transactions transactions={state.transactions} />
+        <Operations />
+      </div>
+    );
   }
 
 }
