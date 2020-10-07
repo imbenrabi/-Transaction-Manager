@@ -40,10 +40,16 @@ export class TransactionsRouter {
                 return next(content);
             }
         });
-        this.express.route('/transaction').delete(async (req, res, next) => {
+        this.express.route('/:id').delete(auth, async (req, res, next) => {
             try {
-                console.log('deleting...');
-                res.send('deleted')
+                const transaction = await Transaction.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
+
+                if (!task) {
+                    res.status(404)
+                    throw new Error('Transaction not found')
+                }
+
+                return next(handleMongoResp(transaction));
             } catch (e) {
                 let content = this.services.parsing.parseError(e);
                 return next(content);

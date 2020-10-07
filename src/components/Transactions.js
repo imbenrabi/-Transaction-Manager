@@ -7,7 +7,7 @@ class Transactions extends Component {
 
     render() {
         return (
-            <div traansactions-container>
+            <div className='transactions-container'>
                 {this.renderTransactions()}
             </div>
         );
