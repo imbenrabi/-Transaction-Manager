@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import axios from "axios"
+import Operations from './Components/Operations';
+import Transactions from './Components/Transactions';
 
 // const axios = require('axios')
 
