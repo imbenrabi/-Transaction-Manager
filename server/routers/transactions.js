@@ -25,6 +25,22 @@ export class TransactionsRouter {
                 return next(content);
             }
         });
+        console.log('Starting transactions router...');
+        this.express.route('/:category').get(auth, async (req, res, next) => {
+            try {
+                const category = req.params.category;
+                const match = { owner: req.user._id, category };
+                req.user.transactions = await Transaction.aggregate([
+                    { $match: match },
+                    { $group: { _id: null, amount: { $sum: '$amount' } } }
+                ]);
+                const response = await handleMongoResp(req.user.transactions);
+                return next(response);
+            } catch (e) {
+                let content = this.services.parsing.parseError(e);
+                return next(content);
+            }
+        });
         this.express.route('/transaction').post(auth, async (req, res, next) => {
             try {
                 console.log('here');
@@ -44,11 +60,10 @@ export class TransactionsRouter {
             try {
                 const transaction = await Transaction.findOneAndDelete({ _id: req.params.id, owner: req.user._id })
 
-                if (!task) {
+                if (!transaction) {
                     res.status(404)
                     throw new Error('Transaction not found')
                 }
-
                 return next(handleMongoResp(transaction));
             } catch (e) {
                 let content = this.services.parsing.parseError(e);

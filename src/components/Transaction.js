@@ -7,7 +7,7 @@ class Transaction extends Component {
         return (
             <div className="transaction">
                 <span>Amount: ${transaction.amount}</span><span> Vendor: {transaction.vendor}</span><span> Category: {transaction.category}</span>
-                <DeleteButton />
+                <DeleteButton delete={this.props.delete} transaction={this.props.transaction} />
             </div>
         );
     }
