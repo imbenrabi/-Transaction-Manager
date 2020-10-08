@@ -6,14 +6,15 @@ import Operations from './components/Operations';
 import Transactions from './components/Transactions';
 import Breakdown from './components/Breakdown';
 import 'antd/dist/antd.css';
-import { Layout, Menu, PageHeader } from 'antd';
+import { Layout, Menu, PageHeader, Typography, Space } from 'antd';
 import {
   FileAddOutlined,
   MoneyCollectOutlined,
   MenuOutlined
 } from '@ant-design/icons';
 
-const { Header, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
+const { Text } = Typography;
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjdkNzA5M2VhYjk2ZDNiNTNjMzJhMzciLCJpYXQiOjE2MDIwNTYzMzl9.08LWSuezcD214OAlbDiWswKn5Nzzw2cIBUugawgPslY';
 
 class App extends Component {
@@ -75,7 +76,11 @@ class App extends Component {
     let balance = 0;
     this.state.transactions.forEach(t => balance += t.amount)
 
-    return `Balance: $${balance}`
+    return (
+      balance >= 0 ?
+        <Text type="success">{`Balance: $${balance}`}</Text> :
+        <Text type="danger">{`Balance: ($${balance})`}</Text>
+    )
   }
 
   addTransaction = async (transaction) => {
@@ -106,21 +111,21 @@ class App extends Component {
   handleTransactionLink = () => this.setState({ pageTitle: 'My Transactions' })
   handleCategoriesLink = () => this.setState({ pageTitle: 'Balance By Category' })
   handleOperationsLink = () => this.setState({ pageTitle: 'New Transaction', redirect: false })
-  // resetRedirectState = () => this.setState({ redirect: false })
 
   render() {
     const state = this.state;
     return (
-      <Layout>
+
+      <Layout style={{ height: '100vh' }}>
         <Router>
           <Sider>
             <div className="logo balance">{this.renderBalance()}</div>
-            <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
-              <Menu.Item key="2" icon={<MoneyCollectOutlined />}>
-                <Link onClick={this.handleTransactionLink} to="/transactions">Transactions</Link>
-              </Menu.Item>
+            <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
               <Menu.Item key="1" icon={<MenuOutlined />}>
                 <Link onClick={this.handleCategoriesLink} to="/breakdown">Categories</Link>
+              </Menu.Item>
+              <Menu.Item key="2" icon={<MoneyCollectOutlined />}>
+                <Link onClick={this.handleTransactionLink} to="/transactions">Transactions</Link>
               </Menu.Item>
               <Menu.Item key="3" icon={<FileAddOutlined />}>
                 <Link onClick={this.handleOperationsLink} to="/operations">Operations</Link>
@@ -152,6 +157,7 @@ class App extends Component {
           </Layout>
         </Router>
       </Layout>
+
     );
   }
 

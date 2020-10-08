@@ -3,7 +3,6 @@ import { User } from '../models/user'
 import { handleMongoResp } from "../services/mongoResp.service";
 
 export class UsersRouter {
-
     constructor(services) {
         this.prefix = 'users';
         this.services = services;
@@ -23,6 +22,7 @@ export class UsersRouter {
                 return next(content);
             }
         });
+
         this.express.route('/user').post(async (req, res, next) => {
             try {
                 console.log('1');
@@ -38,6 +38,7 @@ export class UsersRouter {
                 return next(content);
             }
         });
+
         this.express.route('/users').delete(async (req, res, next) => {
             try {
                 console.log('deleting...');
@@ -47,7 +48,5 @@ export class UsersRouter {
                 return next(content);
             }
         });
-
     }
-
 }

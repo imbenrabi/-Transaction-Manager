@@ -3,12 +3,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 adding on to it express-mongoose server.
 
 ## General description
+Expense management web app.
 Node.js server serving React.Js app using es6 features(through Babel).
+UI by ant design.
 
-## Installation
-- Make sure you have Node.js installed
-- Clone the repo
-- run `yarn`
 
 ## Start
 - Runs the app in the development mode.<br />
@@ -17,19 +15,12 @@ Node.js server serving React.Js app using es6 features(through Babel).
 - The page will reload if you make edits.<br />
 - You will also see any lint errors in the console.
 
-## Build
-
-- Builds the app for production to the `build` folder.<br />
-- It correctly bundles React in production mode and optimizes the build for the best performance.
-
-- The build is minified and the filenames include the hashes.<br />
-
-- See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more - information.
-
 ## Starting the server
 
 - run `yarn start:server` (nodemon keeps the process alive).
+- server loads slower than the client side on dev env so make sure the server loads then refresh page.
 
 ## Roadmap
 
-- Adding auth middleware. 
+- Utilizing auth on clientside to allow multiple users. 
+- GetAllCategory aggregation route server side.

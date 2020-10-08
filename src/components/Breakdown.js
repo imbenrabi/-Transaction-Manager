@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
-import Category from './Category';
+import { Card, Col, Row, Typography } from 'antd';
+import 'antd/dist/antd.css';
+const { Text } = Typography;
 
 class Breakdown extends Component {
     renderCategories = () => {
         return this.props.aggrTransactions.map((aggr) => {
             const name = Object.keys(aggr)[0]
-            return (< Category key={name} name={name} amount={aggr[name]} />)
+            return (
+                <Col key={`${name}-balance`} span={8}>
+                    <Card key={name} title={name} bordered={false} >
+                        {
+                            aggr[name] >= 0 ?
+                                <Text type="success">{`Balance: $${aggr[name]}`}</Text> :
+                                <Text type="danger">{`Balance: ($${-aggr[name]})`}</Text>
+                        }
+                    </Card>
+                </Col>
+            )
         })
     }
 
     render() {
         return (
-            <div className="breakdown">
-                {this.renderCategories()}
+            <div className="breakdown site-card-wrapper">
+                <Row gutter={16}>
+                    {this.renderCategories()}
+                </Row>
             </div>
         );
     }

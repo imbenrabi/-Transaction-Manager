@@ -4,7 +4,6 @@ import { handleMongoResp } from "../services/mongoResp.service";
 import { auth } from '../services/auth.service';
 
 export class TransactionsRouter {
-
     constructor(services) {
         this.prefix = 'transactions';
         this.services = services;
@@ -25,7 +24,7 @@ export class TransactionsRouter {
                 return next(content);
             }
         });
-        console.log('Starting transactions router...');
+
         this.express.route('/:category').get(auth, async (req, res, next) => {
             try {
                 const category = req.params.category;
@@ -41,6 +40,7 @@ export class TransactionsRouter {
                 return next(content);
             }
         });
+
         this.express.route('/transaction').post(auth, async (req, res, next) => {
             try {
                 console.log('here');
@@ -56,6 +56,7 @@ export class TransactionsRouter {
                 return next(content);
             }
         });
+
         this.express.route('/:id').delete(auth, async (req, res, next) => {
             try {
                 const transaction = await Transaction.findOneAndDelete({ _id: req.params.id, owner: req.user._id })

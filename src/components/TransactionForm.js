@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormButtons from './FormButtons';
 import 'antd/dist/antd.css';
-import { Input, InputNumber } from 'antd';
+import { Input } from 'antd';
 import { ShopOutlined, TableOutlined, DollarOutlined } from '@ant-design/icons';
 
 class TransactionForm extends Component {
