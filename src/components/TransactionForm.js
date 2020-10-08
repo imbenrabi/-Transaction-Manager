@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import FormButtons from './FormButtons';
+import 'antd/dist/antd.css';
+import { Input, InputNumber } from 'antd';
+import { ShopOutlined, TableOutlined, DollarOutlined } from '@ant-design/icons';
 
 class TransactionForm extends Component {
     constructor() {
         super()
         this.state = {
-            amount: 0,
+            amount: '',
             vendor: '',
             category: ''
         }
     }
 
     handleInputChange = (e) => {
+        console.log(e);
         const target = e.target;
         const value = target.value;
         const name = target.name;
+        console.log(e.target.value, e.target.name);
 
         this.setState({ [name]: value });
     }
@@ -29,9 +34,14 @@ class TransactionForm extends Component {
     render() {
         return (
             <div>
-                <input type="number" name="amount" placeholder='Amount' value={this.state.amount} onChange={this.handleInputChange} />
-                <input type="text" name="vendor" placeholder='Vendor' value={this.state.vendor} onChange={this.handleInputChange} />
-                <input type="text" name="category" placeholder='Category' value={this.state.category} onChange={this.handleInputChange} />
+                <Input placeholder="Category" name="category" prefix={<TableOutlined />} value={this.state.category} onChange={this.handleInputChange} />
+                <br />
+                <br />
+                <Input placeholder="Vendor" name="vendor" prefix={<ShopOutlined />} value={this.state.vendor} onChange={this.handleInputChange} />
+                <br />
+                <br />
+                <Input placeholder="$$$$" name="amount" prefix={<DollarOutlined />} value={this.state.amount} onChange={this.handleInputChange} />                <br />
+                <br />
                 <FormButtons addTransaction={this.addTransaction} />
             </div>
         );
