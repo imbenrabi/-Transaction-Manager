@@ -9,7 +9,7 @@ class Breakdown extends Component {
             const name = Object.keys(aggr)[0]
             return (
                 <Col key={`${name}-balance`} span={8}>
-                    <Card key={name} title={name} bordered={false} >
+                    <Card key={name} title={name} bordered={false} style={{ marginTop: '17px' }} >
                         {
                             aggr[name] >= 0 ?
                                 <Text type="success">{`Balance: $${aggr[name]}`}</Text> :

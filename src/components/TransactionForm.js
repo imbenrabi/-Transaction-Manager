@@ -15,11 +15,9 @@ class TransactionForm extends Component {
     }
 
     handleInputChange = (e) => {
-        console.log(e);
         const target = e.target;
         const value = target.value;
         const name = target.name;
-        console.log(e.target.value, e.target.name);
 
         this.setState({ [name]: value });
     }

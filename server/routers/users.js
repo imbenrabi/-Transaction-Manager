@@ -1,6 +1,7 @@
 import express from 'express';
-import { User } from '../models/user'
 import { handleMongoResp } from "../services/mongoResp.service";
+import { auth } from '../services/auth.service';
+const User = require('../models/user')
 
 export class UsersRouter {
     constructor(services) {
@@ -23,16 +24,37 @@ export class UsersRouter {
             }
         });
 
-        this.express.route('/user').post(async (req, res, next) => {
+        this.express.route('/login').post(async (req, res, next) => {
             try {
-                console.log('1');
-                let user = new User(req.body);
-                console.log('2');
-                user = await user.save()
-                console.log('3');
-                const token = await user.generateAuthToken()
-                console.log(token);
-                return next({ ...handleMongoResp(user), token });
+                console.log('Attemting to log in...');
+                let user = await User.findByCredentials(req.body.email, req.body.password);
+                if (!user) {
+                    console.log('No user found, creating a new account...');
+                    console.log(req.body);
+                    user = new User(req.body);
+                    user = await user.save()
+                    const token = await user.generateAuthToken();
+                    const response = { ...user._doc, token };
+                    return next(handleMongoResp(response));
+                }
+
+                console.log('User found! Retrieving token.');
+                const token = await user.generateAuthToken();
+                const response = { ...user._doc, token }
+                return next(handleMongoResp(response));
+            } catch (e) {
+                let content = this.services.parsing.parseError(e);
+                return next(content);
+            }
+        });
+
+        this.express.route('/logout').post(auth, async (req, res, next) => {
+            try {
+                req.user.tokens = req.user.tokens.filter((token) => {
+                    return token.token !== req.token;
+                })
+                const user = await req.user.save();
+                return next(handleMongoResp(user));
             } catch (e) {
                 let content = this.services.parsing.parseError(e);
                 return next(content);

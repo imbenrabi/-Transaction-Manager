@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
         trim: true
     },
     email: {
@@ -65,10 +64,8 @@ userSchema.virtual('transactions', {
 userSchema.methods.toJSON = function () {
     const user = this;
     const userObject = user.toObject()
-
     delete userObject.password;
     delete userObject.tokens;
-    delete userObject.avatar;
 
     return userObject;
 }
@@ -76,7 +73,6 @@ userSchema.methods.toJSON = function () {
 userSchema.methods.generateAuthToken = async function () {
     const user = this;
     const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET || 'exampleSecret');
-
     user.tokens = user.tokens.concat({ token });
     await user.save();
 
@@ -86,13 +82,11 @@ userSchema.methods.generateAuthToken = async function () {
 /**userSchema.statics house static methods */
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email });
-
     if (!user) {
-        throw new Error('Unable to login');
+        return null;
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
-
     if (!isMatch) {
         throw new Error('Unable to login');
     }
@@ -106,7 +100,6 @@ userSchema.statics.findByCredentials = async (email, password) => {
 /**hash the plain text password before saving*/
 userSchema.pre('save', async function (next) {
     const user = this;
-
     if (user.isModified('password')) {
         user.password = await bcrypt.hash(user.password, 8);
     }
@@ -117,7 +110,6 @@ userSchema.pre('save', async function (next) {
 /**delete user tasks when user is removed */
 userSchema.pre('remove', async function (next) {
     const user = this;
-
     await Task.deleteMany({ owner: user._id })
     next();
 })

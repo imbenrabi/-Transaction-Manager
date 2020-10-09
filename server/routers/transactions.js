@@ -43,13 +43,11 @@ export class TransactionsRouter {
 
         this.express.route('/transaction').post(auth, async (req, res, next) => {
             try {
-                console.log('here');
                 let transaction = new Transaction({
                     ...req.body,
                     owner: req.user._id
                 })
                 transaction = await transaction.save();
-                console.log(transaction);
                 return next(handleMongoResp(transaction));
             } catch (e) {
                 let content = this.services.parsing.parseError(e);
