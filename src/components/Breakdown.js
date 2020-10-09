@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Col, Row, Typography } from 'antd';
 import 'antd/dist/antd.css';
+
 const { Text } = Typography;
 
 class Breakdown extends Component {

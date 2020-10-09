@@ -20,14 +20,20 @@ class Login extends Component {
     }
 
     onFinish = async (values) => {
-        const token = await this.getUserToken(values);
-        this.props.login(token)
+        try {
+            if (!values) {
+                return;
+            }
+            const token = await this.getUserToken(values);
+            this.props.login(token);
+        } catch (error) {
+            throw error;
+        }
     }
 
     onFinishFailed = (error) => Alert(error);
 
     render() {
-        const state = this.state;
         return (
             <Form
                 layout="vertical"

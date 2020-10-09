@@ -157,29 +157,36 @@ class App extends Component {
 
   handleLogin = (token) => {
     authService.login(token)
-    this.setTransactionsData(token);
+    this.setData(token);
     this.setState({ loggedIn: authService.isLoggedIn() })
   }
 
   handleLogout = async () => {
     if (authService.isLoggedIn()) {
       try {
-        const token = authService.getToken()
-        const request = axios.create({
-          baseURL: "/users/logout"
-        });
-
-        request.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        const resp = await request.post();
-        if (resp.status !== 200) {
-          throw new Error('Unable to logout');
-        }
+        const token = authService.getToken();
+        await this.logoutUserFromDB(token);
         authService.logout();
         this.setState({ loggedIn: authService.isLoggedIn(), transactions: [] })
 
       } catch (error) {
         throw error;
       }
+    }
+  }
+
+  logoutUserFromDB = async (token) => {
+    try {
+      const request = axios.create({
+        baseURL: "/users/logout"
+      });
+      request.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const resp = await request.post();
+      if (resp.status !== 200) {
+        throw new Error('Unable to logout');
+      }
+    } catch (error) {
+      throw error
     }
   }
 
