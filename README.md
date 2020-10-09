@@ -12,7 +12,6 @@ UI by [Ant Design](https://ant.design/).
 
 ## Starting the server 
 - Run `yarn start:server` (nodemon keeps the process alive).
-- Create a user manually at the db and paste the token in App.js! since clientside missing user gen.
 - Server loads slower than the client side on dev env so make sure the server loads then refresh page.
 
 ## Start
@@ -24,5 +23,5 @@ UI by [Ant Design](https://ant.design/).
 
 
 ## Roadmap
-- Utilizing auth on clientside to allow multiple users(currently hardcoded token). 
 - GetAllCategory aggregation route server side.
+- upgrade catgeories view to a fully fleged dashboard.
