@@ -8,7 +8,7 @@ import Transactions from './components/Transactions';
 import Breakdown from './components/Breakdown';
 import Login from './components/Login';
 import 'antd/dist/antd.css';
-import { Layout, Menu, PageHeader, Typography, Space } from 'antd';
+import { Layout, Menu, PageHeader, Typography, Space, message } from 'antd';
 import {
   FileAddOutlined,
   MoneyCollectOutlined,
@@ -33,7 +33,7 @@ class App extends Component {
     }
   }
 
-  setData = async (token) => {
+  setData = async (token, del = false) => {
     try {
       const config = {
         headers: { Authorization: `Bearer ${token}` }
@@ -42,6 +42,7 @@ class App extends Component {
       const transactions = resp.data.data;
       const catNames = this.getCategoryNames(transactions);
       const aggregatedTransactions = await this.getAggrData(catNames);
+      if (del) { return this.setState({ aggregatedTransactions, transactions }, message.success('Transaction deleted', 5)) }
       this.setState({ aggregatedTransactions, transactions });
     } catch (error) {
       throw error;
@@ -133,8 +134,9 @@ class App extends Component {
         };
         await axios.post('/transactions/transaction', transaction, config);
         await this.setData(token);
-        this.setState({ redirect: true, pageTitle: 'My Transactions' })
+        this.setState({ redirect: true, pageTitle: 'My Transactions' }, message.success('Transaction added', 5))
       } catch (error) {
+        message.error('Something went wrong');
         throw error;
       }
     }
@@ -148,8 +150,9 @@ class App extends Component {
           headers: { Authorization: `Bearer ${token}` }
         };
         await axios.delete(`/transactions/${id}`, config);
-        await this.setData(token);
+        await this.setData(token, true)
       } catch (error) {
+        message.error('Something went wrong');
         throw error;
       }
     }

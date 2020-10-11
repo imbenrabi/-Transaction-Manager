@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import FormButtons from './FormButtons';
 import 'antd/dist/antd.css';
-import { Input } from 'antd';
+import { Input, message } from 'antd';
 import { ShopOutlined, TableOutlined, DollarOutlined } from '@ant-design/icons';
 
 class TransactionForm extends Component {
@@ -22,10 +22,20 @@ class TransactionForm extends Component {
         this.setState({ [name]: value });
     }
 
+    invalidInputs(amount, vendor, category) {
+        if (!amount || !vendor || !category || amount === 0) {
+            return true;
+        }
+        return false;
+    }
+
     addTransaction = (withdraw = false) => {
         const amount = parseInt(withdraw ? -this.state.amount : this.state.amount);
         const vendor = this.state.vendor;
         const category = this.state.category
+        if (this.invalidInputs(amount, vendor, category)) {
+            return message.warning('Fill out all fields');
+        }
         this.props.addTransaction({ amount, vendor, category })
     }
 
