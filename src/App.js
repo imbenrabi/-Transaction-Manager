@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react'
 import './App.css';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom'
-import { AuthService } from './services/Auth.service';
 import axios from "axios";
+import { AuthService } from './services/Auth.service';
 import Operations from './components/Operations';
 import Transactions from './components/Transactions';
 import Breakdown from './components/Breakdown';
