@@ -4,7 +4,7 @@ adding on to it express-mongoose server.
 
 ## General description
 Expense management web app.
-Node.js server serving React.Js app using es6 features(through Babel).
+Node.js server serving React.Js - mobx app using es6 & es7 features(through Babel).
 UI by [Ant Design](https://ant.design/).
 
 ## Production deployment / production-like env.
