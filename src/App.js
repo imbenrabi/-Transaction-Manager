@@ -8,7 +8,7 @@ import Transactions from './components/Transactions';
 import Breakdown from './components/Breakdown';
 import Login from './components/Login';
 import 'antd/dist/antd.css';
-import { Layout, Menu, PageHeader, Typography, Space, message } from 'antd';
+import { Layout, Menu, PageHeader, Typography, message } from 'antd';
 import {
   FileAddOutlined,
   MoneyCollectOutlined,

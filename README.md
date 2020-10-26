@@ -4,7 +4,8 @@ adding on to it express-mongoose server.
 
 ## General description
 Expense management web app.
-Node.js server serving React.Js app using es6 features(through Babel).
+Node.js server serving React.Js app. 
+The server is utilizing es6 features(through Babel).
 UI by [Ant Design](https://ant.design/).
 
 ## Production deployment / production-like env.
@@ -12,9 +13,10 @@ UI by [Ant Design](https://ant.design/).
 
 ## Starting the server 
 - Run `yarn start:server` (nodemon keeps the process alive).
-- Server loads slower than the client side on dev env so make sure the server loads then refresh page.
 
 ## Start
+- Run `yarn start` on a separate terminal tab than the server's.
+- Server loads slower than the client side on dev env so make sure the server finished init.
 - Runs the app in the development mode.<br />
 - Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
@@ -24,4 +26,4 @@ UI by [Ant Design](https://ant.design/).
 
 ## Roadmap
 - GetAllCategory aggregation route server side.
-- upgrade catgeories view to a fully fleged dashboard.
+- upgrade categories view to a worthy dashboard using recharts.
