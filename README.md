@@ -26,4 +26,7 @@ UI by [Ant Design](https://ant.design/).
 
 ## Roadmap
 - GetAllCategory aggregation route server side.
+- Migrating all http requests to a service.
+- Toggle dark mode button.
+- Migrating Operations to a modal on transactions route.
 - upgrade categories view to a worthy dashboard using recharts.

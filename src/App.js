@@ -206,6 +206,7 @@ class App extends Component {
   }
 
   handleOperationsLink = () => {
+    console.log(this.state.loggedIn);
     if (this.state.loggedIn) {
       this.setState({ pageTitle: 'New Transaction', redirect: false })
     }
@@ -253,7 +254,7 @@ class App extends Component {
                 <Switch>
                   <Route path='/login' exact render={() => <Login login={this.handleLogin} />} />
                   <Route path='/' exact render={() => <Redirect to='/transactions' />} />
-                  <Route path='/transactions' exact render={() => <Transactions delete={this.removeTransaction} resetRedirect={this.resetRedirectState} transactions={state.transactions} />} />
+                  <Route path='/transactions' exact render={() => <Transactions delete={this.removeTransaction} handleOperationsLink={this.handleOperationsLink} transactions={state.transactions} />} />
                   <Route path='/operations' exact render={() => state.redirect ? <Redirect push to="/transactions" /> : <Operations addTransaction={this.addTransaction} />} />
                   <Route path='/breakdown' exact render={() => <Breakdown aggrTransactions={state.aggregatedTransactions} />} />
                 </Switch>

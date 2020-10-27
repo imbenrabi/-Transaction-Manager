@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Table, Typography } from 'antd';
+import { Table, Typography, Button } from 'antd';
 import 'antd/dist/antd.css';
 import DeleteButton from './DeleteButton';
+import { PlusOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 const { Text } = Typography;
 
 class Transactions extends Component {
@@ -42,10 +44,17 @@ class Transactions extends Component {
         this.setState({ columns })
     }
 
+    handlePlusClick = () => {
+        this.props.handleOperationsLink()
+    }
+
     render() {
         return (
             <div className='transactions-container'>
                 <Table columns={this.state.columns} dataSource={this.props.transactions} />
+                <Link to="/operations" onClick={this.handlePlusClick}>
+                    <Button type="primary" size="large" shape="round" icon={<PlusOutlined />} style={{ background: 'rgba(0, 0, 0, 0.85)', borderColor: 'rgba(0, 0, 0, 0.85)' }} />
+                </Link>
             </div>
         );
     }
