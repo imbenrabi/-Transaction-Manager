@@ -206,7 +206,6 @@ class App extends Component {
   }
 
   handleOperationsLink = () => {
-    console.log(this.state.loggedIn);
     if (this.state.loggedIn) {
       this.setState({ pageTitle: 'New Transaction', redirect: false })
     }
