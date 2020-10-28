@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcryptjs';
+import { Transaction } from './transaction';
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
@@ -110,7 +111,7 @@ userSchema.pre('save', async function (next) {
 /**delete user tasks when user is removed */
 userSchema.pre('remove', async function (next) {
     const user = this;
-    await Task.deleteMany({ owner: user._id })
+    await Transaction.deleteMany({ owner: user._id })
     next();
 })
 
