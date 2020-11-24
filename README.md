@@ -1,6 +1,5 @@
 # Personal Expense Manager
-- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app),
-- adding on to it express-mongoose server.
+- This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), adding on to it express-mongoose server.
 
 ## General description
 - Expense management web app.
@@ -32,8 +31,5 @@
 </h1>
 
 ## Roadmap
-- GetAllCategory aggregation route server side.
-- Migrating all http requests to a service.
-- Toggle dark mode button.
 - Migrating Operations to a modal on transactions route.
-- upgrade categories view to a worthy dashboard using recharts.
+- Upgrade categories dashboard to use recharts.
