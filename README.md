@@ -31,5 +31,7 @@
 </h1>
 
 ## Roadmap
+- Moving http requests to a dedicated service.
+- Adding state management using Mobx.
 - Migrating Operations to a modal on transactions route.
 - Upgrade categories dashboard to use recharts.
